@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import randomstring from 'randomstring';
 
-export default class PythonicClient {
+class PyFiClient {
   constructor(){
     this.run = {};
     this.pythonProcesses = {};
@@ -10,6 +10,7 @@ export default class PythonicClient {
   startSocket(){
     this.socket = io();
     this.socket.on('pythonic-modules', (data) => {
+      console.log('PYTHONMODULES', data)
       this.initModules(data)
     })
     this.socket.on('connect', ()=>{
@@ -59,3 +60,16 @@ export default class PythonicClient {
   }
 
 }
+
+const proxyHandler = {
+  get: (target, key, receiver) => {
+    if (key === '_') {
+      return target;
+    } else if (target.run && key in target.run) {
+      return target.run[key];
+    }
+    return undefined;
+  },
+};
+
+export default function(){ return new Proxy(new PyFiClient(), proxyHandler) };

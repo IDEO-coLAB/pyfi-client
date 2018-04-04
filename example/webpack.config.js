@@ -3,9 +3,9 @@ var webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
-  entry: "./index.js",
+  entry: "./client.js",
   output: {
     path: __dirname,
-    filename: "./index-built.js"
+    filename: "./public/client-built.js"
   },
 };
