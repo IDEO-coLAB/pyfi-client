@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/IDEO-coLAB/pyfi-client.git"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "randomstring": "^1.1.5",
     "socket.io-client": "^2.0.4"
-  },
-  "devDependencies": {
-    "webpack-dev-server": "^2.11.1"
   }
 }
