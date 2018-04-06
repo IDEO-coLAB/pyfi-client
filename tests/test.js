@@ -32,11 +32,13 @@ test('start server, test client', (t) => {
           pyc.time().then((res)=>{
             t.pass(`time: ${res}`);
             py._.end()
-            process.kill(0)
+            t.end();
+            process.exit(0)
           }).catch((err) => {
             t.fail(err);
             py._.end()
-            process.kill(1)
+            t.end();
+            process.exit(1)
           })
         })
 
