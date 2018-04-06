@@ -1,16 +1,16 @@
-import io from 'socket.io-client';
-import randomstring from 'randomstring';
+const io = require('socket.io-client');
+const randomstring = require('randomstring');
 
 class PyFiClient {
-  constructor(){
+  constructor(uri){
+    this.uri = uri;
     this.run = {};
     this.pythonProcesses = {};
     this.startSocket();
   }
   startSocket(){
-    this.socket = io();
+    this.socket = io(this.uri);
     this.socket.on('pythonic-modules', (data) => {
-      console.log('PYTHONMODULES', data)
       this.initModules(data)
     })
     this.socket.on('connect', ()=>{
@@ -72,4 +72,4 @@ const proxyHandler = {
   },
 };
 
-export default function(){ return new Proxy(new PyFiClient(), proxyHandler) };
+module.exports = function(uri){ return new Proxy(new PyFiClient(uri), proxyHandler) };

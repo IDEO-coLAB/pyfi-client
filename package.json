@@ -4,7 +4,7 @@
   "description": "Make PyFi functionality available to a client 📼",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape tests/**.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "dependencies": {
     "randomstring": "^1.1.5",
     "socket.io-client": "^2.0.4"
+  },
+  "devDependencies": {
+    "express": "^4.16.3",
+    "pyfi": "^1.0.1",
+    "socket.io": "^2.1.0",
+    "tape": "^4.9.0"
   }
 }
