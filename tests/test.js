@@ -1,4 +1,3 @@
-const phantomjs = require('phantomjs-prebuilt');
 const test = require('tape');
 
 const PyFi = require('pyfi');
