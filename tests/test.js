@@ -21,7 +21,7 @@ test('start server, test client', (t) => {
       }],
     });
 
-    py._.attachSocketIO(io);
+    py._.attachClientSocketIO(io);
 
     py._.onReady(() => {
       server.listen(3000, () => {

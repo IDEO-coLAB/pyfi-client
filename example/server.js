@@ -16,11 +16,10 @@ const py = PyFi({
     }],
   });
 
-py._.attachSocketIO(io);
+py._.attachClientSocketIO(io);
 
 
 py._.onReady(() => {
-  console.log(py._.moduleTree);
   server.listen(3000, () => {
     console.log('listening on port 3000!');
   });
