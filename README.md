@@ -1,14 +1,14 @@
 # pyfi-client [![CircleCI](https://circleci.com/gh/IDEO-coLAB/pyfi-client/tree/master.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/IDEO-coLAB/pyfi-client/tree/master) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/IDEO-coLAB/pyfi-client/blob/master/LICENSE) [![npm](https://img.shields.io/npm/v/pyfi-client.svg)](https://www.npmjs.com/package/pyfi-client)
 
-Quickly make Python functions available to a javascript client when used along with [pyfi](https://github.com/ideo-colab/pyfi).
+Quickly make Python functions available to a javascript client when used along with [PyFi](https://github.com/ideo-colab/pyfi) ✨
 
 ## Usage
 
-Pyfi-Client simply duplicates the functionality exposed to the server and makes it available to the client via Socket.io.
+Pyfi-Client duplicates the functionality exposed to the server and makes it available to the client via Socket.io.
 
 
 ### Setting up a server
-Getting up and running is pretty simple. First attach a socket.io instance on your client:
+Getting up and running is pretty simple. From your Node PyFi instance, attach a socket.io instance:
 ```js
 py._.attachClientSocketIO(io)
 ```
