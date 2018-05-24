@@ -45,8 +45,8 @@ class PyFiClient {
     this.socket.on('pyfi-run-error', (res) => {
       this.pythonProcesses[res.rid].reject(res.error)
     })
-    this.socket.on('pyfi-run-message', (message) => {
-      this.pythonProcesses[res.rid].message(message)
+    this.socket.on('pyfi-run-message', (res) => {
+      this.pythonProcesses[res.rid].message(res.message)
     })
   }
   initModules(moduleTree){
