@@ -56,12 +56,42 @@ import PyFiClient from 'pyfi-client';
 const py = PyFiClient(http://localhost:3000)
 
 py._.onReady(()=>{
-  py.tell_me_the_time().then(result => {
+  py.tell_me_the_time()
+  .then(result => {
     console.log(result)
+  })
+  .catch(error => {
+    // handle error
   })
 })
 ```
 PyFiClient automatically duplicates all of the Python functions imported on the server on the client.
+
+### Sending messages mid-execution
+[Just like in PyFi](https://github.com/IDEO-coLAB/pyfi#sending-messages-through-pyfi-while-a-function-is-running), PyfiClient supports receiving messages from Python while a function is running. That allows for, for example, streaming status back to a client while a long-running function is in progress.
+
+It looks very similar to PyFi on Node:
+Python:
+```py
+def my_function():
+  # ... do something ...
+  pyfi_message('my message')
+  # ... do something else ...
+  return 'done!'
+```
+Client:
+```js
+py.my_function()
+  .onMessage(data => {
+    console.log(data)
+    // 'my message'
+  })
+  .then(res => {
+    console.log(res);
+    // 'done'
+  })
+```
+
 
 ## Reference
 
