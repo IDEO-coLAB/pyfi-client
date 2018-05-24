@@ -1,6 +1,29 @@
 const io = require('socket.io-client');
 const randomstring = require('randomstring');
 
+class MessagePromise {
+  constructor(cb) {
+    const promiseCb = cb.bind(this, (m) => {
+      if (this.messageHandler) {
+        this.messageHandler(m);
+      }
+    });
+    this.innerPromise = new Promise(promiseCb);
+  }
+  then(...args) {
+    this.innerPromise.then(...args);
+    return this;
+  }
+  catch(...args) {
+    this.innerPromise.catch(...args);
+    return this;
+  }
+  onMessage(handler) {
+    this.messageHandler = handler;
+    return this;
+  }
+}
+
 class PyFiClient {
   constructor(uri){
     this.uri = uri;
@@ -10,14 +33,20 @@ class PyFiClient {
   }
   startSocket(){
     this.socket = io(this.uri);
-    this.socket.on('pythonic-modules', (data) => {
+    this.socket.on('pyfi-modules', (data) => {
       this.initModules(data)
     })
     this.socket.on('connect', ()=>{
-      this.socket.emit('pythonic-get-modules')
+      this.socket.emit('pyfi-get-modules')
     })
-    this.socket.on('pythonic-run-data', (res) => {
+    this.socket.on('pyfi-run-data', (res) => {
       this.pythonProcesses[res.rid].resolve(res.data)
+    })
+    this.socket.on('pyfi-run-error', (res) => {
+      this.pythonProcesses[res.rid].reject(res.error)
+    })
+    this.socket.on('pyfi-run-message', (message) => {
+      this.pythonProcesses[res.rid].message(message)
     })
   }
   initModules(moduleTree){
@@ -50,9 +79,9 @@ class PyFiClient {
   }
   callPython(request){
     const rid = randomstring.generate(5)
-    this.socket.emit('pythonic-run', {rid, request})
-    return new Promise((resolve, reject) => {
-      this.pythonProcesses[rid] = {resolve, reject}
+    this.socket.emit('pyfi-run', {rid, request})
+    return new MessagePromise((message, resolve, reject) => {
+      this.pythonProcesses[rid] = {message, resolve, reject}
     })
   }
   onReady(callback){

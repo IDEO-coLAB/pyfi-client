@@ -25,7 +25,6 @@ test('start server, test client', (t) => {
 
     py._.onReady(() => {
       server.listen(3000, () => {
-
         const pyc = PyFiClient('http://localhost:3000');
 
         pyc._.onReady(()=>{
